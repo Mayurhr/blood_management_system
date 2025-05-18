@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blood Management System - Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      height: 100vh;
+      background: linear-gradient(-45deg, rgb(93, 179, 218), rgb(89, 158, 236), rgb(101, 222, 238), rgb(115, 193, 244), rgb(102, 203, 223), rgb(96, 230, 233), rgb(89, 187, 244));
+      background-size: 400% 400%;
+      animation: rainbowBG 20s ease infinite;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    @keyframes rainbowBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .title {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #000;
+      text-align: center;
+    }
+    .scene {
+      width: 400px;
+      height: 550px;
+      perspective: 1000px;
+      position: relative;
+    }
+    .cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease-in-out;
+    }
+    .cube.show-back {
+      transform: rotateY(180deg);
+    }
+    .face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+    .front {
+      transform: rotateY(0deg);
+    }
+    .back {
+      transform: rotateY(180deg);
+    }
+    h1 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      color: #000;
+      letter-spacing: 1px;
+    }
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #000;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.4);
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.7);
+      font-size: 1rem;
+      outline: none;
+      color: #000;
+    }
+    .btn {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 1.5rem;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #ed213a, #93291e);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      background: linear-gradient(135deg, #ff5f6d, #ffc371);
+    }
+    .signup-link, .login-link {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #000;
+    }
+    .signup-link a, .login-link a {
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .signup-link a:hover, .login-link a:hover {
+      text-decoration: underline;
+    }
+    .notification {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 30px;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      z-index: 1000;
+      opacity: 0;
+      animation: slideIn 0.5s forwards, fadeOut 0.5s 2.5s forwards;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .notification.success {
+      background: #4CAF50;
+    }
+    @keyframes slideIn {
+      from { top: -50px; opacity: 0; }
+      to { top: 20px; opacity: 1; }
+    }
+    @keyframes fadeOut {
+      from { top: 20px; opacity: 1; }
+      to { top: -50px; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="title">Blood Management System</div>
+  <div class="scene">
+    <div class="cube" id="cube">
+      <!-- Front: Login Form -->
+      <div class="face front">
+        <h1>LOG IN</h1>
+        <form id="loginForm">
+          <label>USERNAME / EMAIL / PHONE</label>
+          <input type="text" name="username" required>
+          
+          <label>PASSWORD</label>
+          <input type="password" name="password" required>
+          
+          <button type="submit" class="btn">LOGIN</button>
+        </form>
+        <p class="signup-link">Don't have an account? <a href="#" onclick="showRegister(); return false;">SIGN UP</a></p>
+      </div>
+
+      <!-- Back: Register Form -->
+      <div class="face back">
+        <h1>REGISTER</h1>
+        <form id="registerForm">
+          <label>USERNAME</label>
+          <input type="text" name="username" required>
+          
+          <label>EMAIL</label>
+          <input type="email" name="email" required>
+          
+          <label>PHONE NUMBER</label>
+          <input type="tel" name="phone" required>
+          
+          <label>PASSWORD</label>
+          <input type="password" name="password" required>
+          
+          <button type="submit" class="btn">REGISTER</button>
+        </form>
+        <p class="login-link">Already have an account? <a href="#" onclick="showLogin(); return false;">LOG IN</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Toggle between login/register forms
+      function showRegister() {
+        document.getElementById('cube').classList.add('show-back');
+      }
+      
+      function showLogin() {
+        document.getElementById('cube').classList.remove('show-back');
+      }
+
+      // Show notification
+      function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+      }
+
+      // Handle login form submission
+      document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Show success message
+        showNotification('Login successful! Redirecting...', 'success');
+        setTimeout(function () {
+          window.location.assign('/blood');
+        }, 1500);
+});
+
+      // Handle register form submission
+      document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        showNotification('Account created successfully!', 'success');
+        showLogin();
+        this.reset();
+      });
+
+      // Initialize link click handlers
+      document.querySelector('.signup-link a').addEventListener('click', showRegister);
+      document.querySelector('.login-link a').addEventListener('click', showLogin);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation Connect</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e74c3c;
+            --secondary-color: #2c3e50;
+            --background-color: #f7f9fc;
+            --card-background: white;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            line-height: 1.6;
+            color: var(--secondary-color);
+        }
+        .hero {
+           background: url('https://plus.unsplash.com/premium_photo-1682310180665-40d421dea31f?q=80&w=2112&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 150px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 40px;
+        }
+        .hero-stat {
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1s forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .hero-stat i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        .hero-stat h3 {
+            color: white;
+            font-size: 1.5rem;
+        }
+        .hero-stat p {
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+        .hero-stat:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background-color: rgba(255,255,255,0.1);
+        }
+        .hero-stat:hover i {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .action-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+        }
+        .action-btn i {
+            margin-right: 10px;
+        }
+        .form-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease-in-out;
+        }
+        .form-container.active {
+            opacity: 1;
+            max-height: 1000px;
+        }
+        .form-card {
+            background: var(--card-background);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            padding: 40px;
+            animation: slideDown 0.5s ease-out;
+        }
+        .form-card h2 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .form-card h2::after {a
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 45px;
+            color: var(--primary-color);
+            transform: translateY(-50%);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        input, textarea {
+            width: 100%;
+            padding: 15px 15px 15px 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1);
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .action-btn {
+                width: 100%;
+                max-width: 300px;
+                margin-bottom: 15px;
+            }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Save a Life, Donate Blood</h1>
+            <p>Every drop counts. Your single donation can save up to three lives. Join our mission to make a difference in our community.</p>
+            <div class="action-buttons">
+                <a href="#" class="action-btn" id="donor-btn">
+                    <i class="fas fa-hand-holding-heart"></i> Become a Donor
+                </a>
+                <a href="#" class="action-btn" id="request-btn">
+                    <i class="fas fa-briefcase-medical"></i> Request Blood
+                </a>
+            </div>
+        </div>
+    </section>
+    <div id="donor-form" class="form-container">
+        <div class="form-card">
+            <h2>Donor Registration</h2>
+            <!-- Donor registration  /add_donor -->
+            <form action="/add_donor" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="blood_type">Blood Type</label>
+                    <select id="blood_type" name="blood_type" required>
+                        <option value="" disabled selected>Select Blood Type</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="contact">Contact Number</label>
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" id="contact" name="contact" required placeholder="Your contact number">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <textarea id="address" name="address" required placeholder="Place"></textarea>
+                </div>
+                <button type="submit" class="btn">Register as Donor</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="request-form" class="form-container">
+        <div class="form-card">
+            <h2>Request Blood</h2>
+            <!-- Blood request form posts to /add_request -->
+            <form action="/add_request" method="POST">
+                <div class="form-group">
+                    <label for="req_name">Patient Name</label>
+                    <i class="fas fa-user-injured"></i>
+                    <input type="text" id="req_name" name="req_name" required placeholder="Patient's full name">
+                </div>
+                <div class="form-group">
+                    <label for="req_blood_type">Required Blood Type</label>
+                    <select id="req_blood_type" name="req_blood_type" required>
+                        <option value="" disabled selected>Select Blood Type</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="req_contact">Contact Number</label>
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" id="req_contact" name="req_contact" required placeholder="Contact for follow-up">
+                </div>
+               
+                <div class="form-group">
+                    <label for="quantity">Blood Units Required</label>
+                    <i class="fas fa-briefcase-medical"></i>
+                    <input type="number" id="quantity" name="quantity" required placeholder="Number of blood units">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <textarea id="address" name="address" required placeholder="Place"></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Submit Blood Request</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('donor-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const donorForm = document.getElementById('donor-form');
+            const requestForm = document.getElementById('request-form');
+            requestForm.classList.remove('active');
+            donorForm.classList.toggle('active');
+        });
+
+        document.getElementById('request-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const donorForm = document.getElementById('donor-form');
+            const requestForm = document.getElementById('request-form');
+            donorForm.classList.remove('active');
+            requestForm.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
