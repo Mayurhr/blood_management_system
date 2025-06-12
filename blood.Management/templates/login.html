@@ -165,7 +165,8 @@
       <!-- Front: Login Form -->
       <div class="face front">
         <h1>LOG IN</h1>
-        <form id="loginForm">
+        <form id="loginForm" action="/login" method="post">
+
           <label>USERNAME / EMAIL / PHONE</label>
           <input type="text" name="username" required>
           
@@ -180,7 +181,8 @@
       <!-- Back: Register Form -->
       <div class="face back">
         <h1>REGISTER</h1>
-        <form id="registerForm">
+        <form id="registerForm" action="/register" method="post">
+
           <label>USERNAME</label>
           <input type="text" name="username" required>
           
@@ -212,14 +214,6 @@
         document.getElementById('cube').classList.remove('show-back');
       }
 
-      // Show notification
-      function showNotification(message, type) {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.textContent = message;
-        document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 3000);
-      }
 
       // Handle login form submission
       document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -232,13 +226,6 @@
         }, 1500);
 });
 
-      // Handle register form submission
-      document.getElementById('registerForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        showNotification('Account created successfully!', 'success');
-        showLogin();
-        this.reset();
-      });
 
       // Initialize link click handlers
       document.querySelector('.signup-link a').addEventListener('click', showRegister);

@@ -30,11 +30,11 @@ def login():
     cursor.close()
 
     if user and bcrypt.checkpw(password.encode('utf-8'), user[0].encode('utf-8')):
-        flash('Login successful!', 'success')
-        return redirect(url_for('blood_page'))
+      flash('Login successful!', 'success')
+      return redirect(url_for('blood_page'))
     else:
-        flash('Invalid credentials. Please try again.', 'danger')
-        return redirect(url_for('login_page'))
+      flash('Invalid credentials. Please try again.', 'danger')
+      return redirect(url_for('login_page'))
 
 # Register endpoint with bcrypt password hashing
 @app.route('/register', methods=['POST'])
@@ -46,6 +46,7 @@ def register():
 
     # Hash the password before storing
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
 
     cursor = mysql.connection.cursor()
     query = """
